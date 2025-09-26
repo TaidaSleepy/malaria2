@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malaria Health Website</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal active">
+        <div class="modal-content">
+            <h2>Malaria Protection Health Website</h2>
+            <div class="login-options">
+                <button class="login-option-btn" data-role="patient">
+                    <h3>Patient Login</h3>
+                    <p>Check for symptoms, reminders for medication, and health tracker</p>
+                </button>
+                <button class="login-option-btn" data-role="provider">
+                    <h3>Medical Provider</h3>
+                    <p>Access patient information and tools</p>
+                </button>
+            </div>
+            
+            <form id="loginForm" class="hidden">
+                <h3 id="loginTitle">Login</h3>
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Password:</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+                <button type="button" id="backToRole" class="btn btn-outline">Back</button>
+            </form>
+            
+            <div class="demo-accounts">
+                <h4>Demo Accounts:</h4>
+                <p><strong>Patient:</strong> patient@gmail.com / 1234567890</p>
+                <p><strong>Doctor:</strong> doctor@gmail.com / 1234567890</p>
+            </div>
+        </div>
+    </div>
+
+    <header class="hidden">
+        <h1>Malaria Health Website</h1>
+        <nav>
+            <button id="homeBtn" class="active">Home</button>
+            <button id="symptomBtn">Symptom Checker</button>
+            <button id="medicationBtn">Medication Timetable</button>
+            <button id="providerBtn">Provider Portal</button>
+            <button id="communityBtn" class="hidden">Community Modules</button>
+            <button id="adminBtn" class="hidden">Dashboard</button>
+            <button id="logoutBtn">Logout</button>
+        </nav>
+        <div id="userInfo" class="user-info"></div>
+    </header>
+    
+    <main id="main-content" class="hidden">
+        <!-- Home Section -->
+        <section id="home" class="active">
+            <h2>Welcome, <span id="userGreeting">User</span></h2>
+            <div id="patientDashboard" class="dashboard hidden">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="nextMedication">--:--</div>
+                        <div class="stat-label">Next Medication</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="medicationsToday">0</div>
+                        <div class="stat-label">Medications Today</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="complianceRate">0%</div>
+                        <div class="stat-label">Compliance Rate</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="providerDashboard" class="dashboard hidden">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="activePatients">2</div>
+                        <div class="stat-label">Active Patient  Number</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="pendingTasks">0</div>
+                        <div class="stat-label">Pending Task</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="todayAppointments">0</div>
+                        <div class="stat-label">Appointments</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Symptom Checker Section -->
+        <section id="symptom" class="hidden">
+            <h2>Symptom Checker</h2>
+            <form id="symptomForm">
+                <label>
+                    Do you have a fever?
+                    <select name="fever" required>
+                        <option value="">Select</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                        <option value="unknown">Not sure</option>
+                    </select>
+                </label>
+                <label>
+                    Are you experiencing chills or sweating?
+                    <select name="chills" required>
+                        <option value="">Select</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                        <option value="unknown">Not sure</option>
+                    </select>
+                </label>
+                <label>
+                    Have you recently traveled to a malaria area?
+                    <select name="travel" required>
+                        <option value="">Select</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                        <option value="unknown">Not sure</option>
+                    </select>
+                </label>
+                <button type="submit" class="btn btn-primary">Check Risks</button>
+            </form>
+            <div id="symptomResult"></div>
+            <div class="directions">
+                <a href="https://www.google.com/maps/search/hospitals+near+Nairobi+Kenya" target="_blank" class="map-link btn">
+                    Directions to Nearest Hospital
+                </a>
+            </div>
+            <article class="education">
+                <h3>Malaria Prevention </h3>
+                <ul>
+                    <li>Use bed nets and mosquito repellent.</li>
+                    <li>Seek prompt care for fever and/or chills.</li>
+                    <li>Complete prescribed medication courses.</li>
+                    <li>Eliminate still water to reduce mosquito breeding.</li>
+                    <li>Wear long sleeves and pants, especially at night.</li>
+                </ul>
+            </article>
+        </section>
+
+        <!-- Medication Timetable Section -->
+        <section id="medication" class="hidden">
+            <h2>Medication Timetable</h2>
+            <div class="medication-controls">
+                <button id="addMedicationBtn" class="btn btn-primary">Add Medication</button>
+                <button id="enableNotificationsBtn" class="btn btn-success">Enable Notification</button>
+            </div>
+            <div id="medicationForm" class="form-card hidden">
+                <h3>Add Medication</h3>
+                <form id="newMedicationForm">
+                    <div class="form-group">
+                        <label>Medication Name:</label>
+                        <input type="text" id="medName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Dosage:</label>
+                        <input type="text" id="medDosage" placeholder="e.g., 300mg" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Start Date:</label>
+                        <input type="date" id="medStartDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Duration (In days):</label>
+                        <input type="number" id="medDuration" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Times per day:</label>
+                        <input type="number" id="medFrequency" min="1" max="6" required>
+                    </div>
+                    <div id="timeInputs" class="time-inputs"></div>
+                    <button type="submit" class="btn btn-primary">Save Medication</button>
+                    <button type="button" id="cancelMedication" class="btn btn-outline">Cancel</button>
+                </form>
+            </div>
+            <div id="medicationList" class="medication-list">
+                <h3>Current Medications</h3>
+                <div id="medicationsContainer"></div>
+            </div>
+            <div id="notificationStatus" class="notification-status"></div>
+        </section>
+
+        <!-- Provider Portal Section -->
+        <section id="provider" class="hidden">
+            <h2>Provider Portal</h2>
+            <form id="patientRegistration">
+                <input type="text" id="patientName" placeholder="Patient Name" required>
+                <input type="date" id="patientDOB" required>
+                <input type="text" id="caseNotes" placeholder="Case Notes" required>
+                <button type="submit" class="btn btn-primary">Register Patient</button>
+            </form>
+            <div id="patientList">
+                <h3>Registered Patients</h3>
+                <ul id="registeredPatients">
+                    <li>Donald J Trump, 2024-10-12, <span class="status">Under treatment</span></li>
+                    <li>Samuel Gordon, 2027-11-19, <span class="status">Its over for you chief</span></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Community Health Worker Section (provider only) -->
+        <section id="community" class="hidden">
+            <h2>Community Health Module</h2>
+            <form id="fieldForm">
+                <input type="text" placeholder="Patient Name" required>
+                <input type="text" placeholder="Symptoms" required>
+                <button type="submit" class="btn btn-primary">Submit Individual Data</button>
+            </form>
+            <div id="communityReports">
+                <h3>Recent Individual Reports</h3>
+                <ul>
+                    <li>Michael Jackson: Fever, chills (Referred)</li>
+                    <li>Martha Steward: Headache (Monitoring)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Admin Dashboard Section (provider only) -->
+        <section id="admin" class="hidden">
+            <h2>Admin Dashboard</h2>
+            <div id="caseStats">
+                <p>Cases Today: <span id="casesToday">5</span></p>
+                <p>Total Cases: <span id="totalCases">120</span></p>
+            </div>
+            <div id="map" title="Click to open in Google Maps">
+                <a href="https://www.google.com/maps/place/Nairobi,+Kenya/" target="_blank" class="map-link">
+                    <img src="https://maps.googleapis.com/maps/api/staticmap?center=Nairobi,Kenya&zoom=11&size=400x150&key=AIzaSyD-PLACEHOLDER" 
+                         alt="Map of Nairobi, Kenya" class="map-img"/>
+                    <span>View Malaria Case Map (Nairobi, Kenya)</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <div id="notificationContainer" class="notification-container"></div>
+    <footer class="hidden">
+        <p>&copy; Malaria Health Website</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+<form id="symptomForm">
+  <!-- ... -->
+</form>
+<div id="symptomResult"></div>
+</html>

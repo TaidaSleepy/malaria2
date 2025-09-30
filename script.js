@@ -1,20 +1,20 @@
 // MalariaHealthWebsite: Main app class for user authentication and dashboard logic
 class MalariaHealthWebsite {
     constructor() {
-        // Stores the current logged in user object
+       
         this.currentUser = null;
-        // Stores medication schedule for the patient (from localStorage)
+      
         this.medications = JSON.parse(localStorage.getItem('medications')) || [];
-        // Number of active patients in provider dashboard
-        this.activePatients = 2;  // Two demo patients to start with
-        // List of all registered patients (provider dashboard)
+      
+        this.activePatients = 2; 
+      
         this.patientList = [
             { name: "Donald J Trump", dob: "2024-10-12", status: "Under treatment" },
             { name: "Samuel Gordon", dob: "2027-11-19", status: "Its over for you chief" }
         ];
-        // Expose this instance to window for onclick handlers
+       
         window.app = this;
-        // Run initial setup
+       
         this.init();
     }
 
@@ -24,20 +24,20 @@ class MalariaHealthWebsite {
         this.checkExistingLogin();
     }
 
-    // Attach event listeners to DOM elements for app navigation and form logic
+
     setupEventListeners() {
         // Login role selection buttons
         document.querySelectorAll('.login-option-btn').forEach(btn => {
             btn.addEventListener('click', (e) => this.handleRoleSelection(e));
         });
 
-        // Back button (from login form to role selection)
+  
         document.getElementById('backToRole')?.addEventListener('click', () => this.showRoleSelection());
 
         // Login form 
         document.getElementById('loginForm')?.addEventListener('submit', (e) => this.handleLogin(e));
 
-        // Logout button
+       
         document.getElementById('logoutBtn')?.addEventListener('click', () => this.handleLogout());
 
         // Navigation buttons for all sections of the website
@@ -55,10 +55,10 @@ class MalariaHealthWebsite {
         document.getElementById('newMedicationForm')?.addEventListener('submit', (e) => this.addMedication(e));
         document.getElementById('medFrequency')?.addEventListener('change', (e) => this.generateTimeInputs(e.target.value));
 
-        // Symptom checker
+    
         document.getElementById('symptomForm')?.addEventListener('submit', (e) => this.handleSymptomCheck(e));
 
-        // Provider Portals patient registration form
+     
         document.getElementById('patientRegistration')?.addEventListener('submit', (e) => this.registerPatient(e));
     }
 
@@ -73,7 +73,7 @@ class MalariaHealthWebsite {
         document.getElementById('loginForm').dataset.role = role;
     }
 
-    // Go back to role selection
+ 
     showRoleSelection() {
         document.querySelector('.login-options').classList.remove('hidden');
         document.getElementById('loginForm').classList.add('hidden');
@@ -91,17 +91,13 @@ class MalariaHealthWebsite {
             'doctor@gmail.com': { password: '1234567890', role: 'provider', name: 'Dr. Samuel' }
         };
         const acc = demoAccounts[email];
-        // Debug: show login values
-        // console.log("LOGIN ATTEMPT", email, password, role, acc);
-
-        // Login successful
+       
         if (acc && acc.password === password && acc.role === role) {
             this.currentUser = { email, role: acc.role, name: acc.name };
             localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
             this.showMainApp();
             this.showNotification('Login successful!', 'success');
         } else {
-            // Wrong credentials
             this.showNotification('Invalid email or password', 'error');
         }
     }
@@ -174,12 +170,11 @@ class MalariaHealthWebsite {
 
     // Show a section (home, symptom, medication, etc.)
     showSection(sectionId) {
-        // Hide all sections
         document.querySelectorAll('main section').forEach(section => {
             section.classList.remove('active');
             section.classList.add('hidden');
         });
-        // Show selected section
+    
         const targetSection = document.getElementById(sectionId);
         if (targetSection) {
             targetSection.classList.remove('hidden');
@@ -202,7 +197,6 @@ class MalariaHealthWebsite {
         this.generateTimeInputs(1);
     }
 
-    // Hide medication form
     hideMedicationForm() {
         document.getElementById('medicationForm').classList.add('hidden');
         document.getElementById('addMedicationBtn').classList.remove('hidden');
@@ -332,7 +326,7 @@ class MalariaHealthWebsite {
         return nextTime ? nextTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : null;
     }
 
-    // Save medications to localStorage for persistence
+  
     saveMedications() {
         localStorage.setItem('medications', JSON.stringify(this.medications));
     }
@@ -340,7 +334,6 @@ class MalariaHealthWebsite {
     // Symptom checker: show risk based on user answers
     handleSymptomCheck(e) {
         e.preventDefault();
-        // Get values from form inputs
         const fever = e.target.fever.value;
         const chills = e.target.chills.value;
         const travel = e.target.travel.value;
@@ -370,7 +363,6 @@ class MalariaHealthWebsite {
         container.appendChild(div);
         setTimeout(() => div.remove(), 3500);
     }
-    // Simulate enabling notifications
     enableNotifications() {
         this.showNotification('Notifications are enabled! (Simulated)', 'success');
     }
@@ -378,16 +370,16 @@ class MalariaHealthWebsite {
     // Provider Portal: Register a new patient and update UI
     registerPatient(e) {
         e.preventDefault();
-        // Get values from form
+      
         const name = document.getElementById('patientName').value.trim();
         const dob = document.getElementById('patientDOB').value;
         const notes = document.getElementById('caseNotes').value.trim();
-        // Validate fields
+   
         if (!name || !dob || !notes) {
             this.showNotification('Please fill all patient details!', 'error');
             return;
         }
-        // Add patient to list and increment active patients
+    
         this.patientList.push({ name, dob, status: "Under treatment" });
         this.activePatients++;
         this.renderPatientList();

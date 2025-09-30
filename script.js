@@ -65,7 +65,7 @@ class MalariaHealthWebsite {
     // Show login for chosen role and set correct role for demo accounts
     handleRoleSelection(e) {
         let role = e.currentTarget.dataset.role;
-        // Map 'provider' to 'provider' for demoAccounts
+        // Map 'provider' to 'provider' for demo accounts
         if (role === "provider") role = "provider";
         document.querySelector('.login-options').classList.add('hidden');
         document.getElementById('loginForm').classList.remove('hidden');
